@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Optimizer - Advanced NLP-Powered Content Enhancement</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Markdown parser for rendering enhanced content -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-robot"></i> AI Content Optimizer</h1>
+                <p class="subtitle">NLP-powered content analysis and optimization</p>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="card">
+                    <h2><i class="fas fa-edit"></i> Content Input</h2>
+                    <form id="contentForm">
+                        <div class="form-group">
+                            <label for="content">Content to Optimize</label>
+                            <textarea 
+                                name="content" 
+                                id="content" 
+                                placeholder="Paste your article, blog post, product description, or any content here..."
+                                rows="8"
+                                required
+                            ></textarea>
+                            <div class="char-counter">
+                                <button type="button" onclick="addSampleContent()" class="sample-btn">
+                                    Add Sample Content
+                                </button>
+                                <span id="charCount">0</span> characters
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="target_audience">Target Audience</label>
+                                <select name="target_audience" id="target_audience">
+                                    <option value="general audience">General Audience</option>
+                                    <option value="students">Students</option>
+                                    <option value="professionals">Professionals</option>
+                                    <option value="experts">Domain Experts</option>
+                                    <option value="beginners">Beginners</option>
+                                    <option value="executives">Executives</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="target_readability">Target Reading Level (Grade)</label>
+                                <input type="number" name="target_readability" id="target_readability" 
+                                       value="8" min="1" max="16" placeholder="8">
+                                <small>1-5: Elementary, 6-8: Middle School, 9-12: High School, 13+: College</small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="target_tone">Target Tone</label>
+                                <select name="target_tone" id="target_tone">
+                                    <option value="professional">Professional</option>
+                                    <option value="casual">Casual</option>
+                                    <option value="formal">Formal</option>
+                                    <option value="friendly">Friendly</option>
+                                    <option value="expert">Expert/Technical</option>
+                                    <option value="persuasive">Persuasive</option>
+                                    <option value="conversational">Conversational</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="optimization_goal">Optimization Goal</label>
+                                <select name="optimization_goal" id="optimization_goal">
+                                    <option value="engagement">Engagement</option>
+                                    <option value="seo">SEO Performance</option>
+                                    <option value="conversion">Conversion</option>
+                                    <option value="readability">Readability</option>
+                                    <option value="education">Educational Impact</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="optimizeBtn">
+                            <i class="fas fa-chart-line"></i> Analyze & Optimize Content
+                        </button>
+                        
+                        <button type="button" class="btn btn-secondary" onclick="testConnection()" style="margin-left: 10px;">
+                            <i class="fas fa-plug"></i> Test Connection
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <!-- Scores Overview -->
+                <div class="card scores-card">
+                    <h2><i class="fas fa-chart-pie"></i> Content Scores</h2>
+                    <div class="scores-grid" id="scoresGrid">
+                        <!-- Scores will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="card analysis-card">
+                    <h2><i class="fas fa-microscope"></i> Detailed Analysis</h2>
+                    <div class="analysis-tabs">
+                        <button class="tab-btn" data-tab="readability">Readability</button>
+                        <button class="tab-btn" data-tab="seo">SEO Analysis</button>
+                        <button class="tab-btn" data-tab="structure">Content Structure</button>
+                        <button class="tab-btn" data-tab="tone">Tone & Style</button>
+                    </div>
+                    <div class="tab-content">
+                        <div id="readability" class="tab-panel"></div>
+                        <div id="seo" class="tab-panel"></div>
+                        <div id="structure" class="tab-panel"></div>
+                        <div id="tone" class="tab-panel"></div>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="card recommendations-card">
+                    <h2><i class="fas fa-lightbulb"></i> Optimization Recommendations</h2>
+                    <div id="recommendationsList">
+                        <!-- Recommendations will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Rewrite Section -->
+            <section class="rewrite-section" id="rewriteSection" style="display: none;">
+                <div class="card ai-enhance-card">
+                    <div class="ai-enhance-inner">
+                        <h2 class="ai-description"> Enhance your content with AI-powered rewriting for Better Engagement and Readability.</h2>
+                        <button id="rewriteBtn" class="btn btn-primary rewrite-btn">
+                            <i class="fas fa-wand-magic-sparkles"></i> Generate Enhanced Content & Assets
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Enhanced Content Display -->
+            <section class="enhanced-content-section" id="enhancedContentSection" style="display: none;">
+                <div class="card enhanced-card">
+                    <h2><i class="fas fa-sparkles"></i> Enhanced Content</h2>
+                    <div class="content-tabs enhanced-tabs">
+                        <button class="tab-btn" data-tab="rewritten" data-enhanced>Rewritten Content</button>
+                        <button class="tab-btn" data-tab="assets" data-enhanced>Marketing Assets</button>
+                        <button class="tab-btn" data-tab="social" data-enhanced>Social Media</button>
+                    </div>
+                    <div class="tab-content enhanced-tabs-content">
+                        <div id="rewritten" class="tab-panel">
+                            <div class="rewritten-content"></div>
+                        </div>
+                        <div id="assets" class="tab-panel">
+                            <div class="assets-grid"></div>
+                        </div>
+                        <div id="social" class="tab-panel">
+                            <div class="social-posts"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" onclick="window.contentOptimizer && window.contentOptimizer.hideLoading()">
+            <div class="loading-content" onclick="event.stopPropagation()">
+                <div class="spinner"></div>
+                <p id="loadingText">Analyzing your content...</p>
+                <small style="margin-top: 10px; color: #666;">Click outside this box to cancel</small>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
