@@ -3,7 +3,7 @@ import json
 import time
 
 # Hardcoded API key - not visible to users
-GEMINI_API_KEY = "AIzaSyDbOAdk9WgHfTFtsMoAvOBrhoHpZEbfjDE"
+GEMINI_API_KEY = "ENTER_YOUR_API_KEY"
 
 def gemini_rewrite(content, recommendations=None, target_params=None, api_key=None):
     """Rewrite content using Gemini AI with specific recommendations"""
